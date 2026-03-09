@@ -51,10 +51,10 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
     
     {/* BLOQUE DE TEXTO: Reducimos mt-8 a mt-4 y pt-6 a pt-4 */}
     <div className="mt-4 space-y-3 animate-fade-in-up">
-      <p className="uppercase tracking-[0.3em] text-[10px] md:text-[12px] text-stone-400">
+      <p className="uppercase tracking-[0.3em] text-[13px] md:text-[15px] text-stone-400">
         ¡Hola {datosInvitado.nombre}!
       </p>
-      <p className="italic text-stone-500 font-light text-sm md:text-base max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
+      <p className="italic text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
         "{datosInvitado.mensaje}"
       </p>
     </div>
