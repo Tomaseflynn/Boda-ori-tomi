@@ -4,6 +4,7 @@
 :root {
   --color-primario: #d9d5d4;
   --color-secundario: #000;
+  --color-CBU: #FAEED6;
 }
 
 /* Estilos para los botones (Reemplazando @apply que da error) */
