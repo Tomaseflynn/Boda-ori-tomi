@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* Definimos tus variables de referencia */
+:root {
+  --color-primario: #d9d5d4;
+  --color-secundario: #000;
+}
+
+/* Estilos para los botones (Reemplazando @apply que da error) */
+.btn-custom {
+  display: inline-block;
+  padding: 10px 40px;
+  background-color: var(--color-primario);
+  color: white;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  border-radius: 30px;
+  border: 1px solid var(--color-primario);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-weight: 500;
+  width: 100%; /* Mobile por defecto */
+  text-align: center;
+}
+
+.btn-custom-alt {
+  display: inline-block;
+  padding: 10px 40px;
+  background-color: white;
+  color: var(--color-primario);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  border-radius: 30px;
+  border: 1px solid white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+}
+
+/* Media Queries Tradicionales para PC */
+@media (min-width: 768px) {
+  .btn-custom, .btn-custom-alt {
+    width: auto;
+  }
+  .btn-custom:hover {
+    background-color: white;
+    color: var(--color-primario);
+  }
+  .btn-custom-alt:hover {
+    background-color: var(--color-primario);
+    color: white;
+    border: 1px solid white;
+  }
+}
+
+/* --- ANIMACIONES --- */
+.animate-fade-in-up {
+  animation: fadeInUp 1.5s both;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Flecha de portada */
+.scroll-down {
+  position: absolute;
+  bottom: 70px;
+  width: 30px;
+  height: 30px;
+  border-bottom: 4px solid #000;
+  border-right: 4px solid #000;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  animation: fade_move_down 2s ease-in-out infinite;
+}
+
+@keyframes fade_move_down {
+  0%   { transform: translate(-50%, -10px) rotate(45deg); opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: translate(-50%, 10px) rotate(45deg); opacity: 0; }
+}
