@@ -113,7 +113,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
       </section>
 
       {/* --- SECCIÓN 3: REGALOS --- */}
-      <section className="bg-boda-CBU py-20 text-center px-6">
+      <section className="bg-[--color-fondo-regalo] py-20 text-center px-6">
         <div className="max-w-md mx-auto space-y-8 animate-fade-in-up">
           <img src="/icono-regalo.svg" className="w-32 mx-auto" alt="Regalo" />
           <p className="text-white font-light text-lg italic px-4">
