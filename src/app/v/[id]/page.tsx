@@ -72,11 +72,11 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
             {/* Componente: Ceremonia */}
             <article className="flex flex-col items-center text-center space-y-0 animate-fade-in-up">
               <img src="/icono-ceremonia.svg" alt="Ceremonia" className="w-32 md:w-40 h-auto" />
-              <h4 className="text-[24px] md:text-[28px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
+              <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
                 Ceremonia
               </h4>
               <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-[17px] md:text-[19px] text-stone-900 font-medium italic">2 de Mayo <br/> 17:00 hs.</p>
+                <p className="text-[17px] md:text-[23px] text-stone-900 font-medium italic">2 de Mayo <br/> 17:00 hs.</p>
                 <p>Parroquia Santa Ana <br/> Tandil, Buenos Aires.</p>
                 <p className="text-xs italic opacity-70">Recibí debajo las indicaciones para llegar.</p>
               </div>
@@ -92,7 +92,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
             {/* Componente: Fiesta */}
             <article className="flex flex-col items-center text-center space-y-0 animate-fade-in-up">
               <img src="/icono-fiesta.svg" alt="Fiesta" className="w-32 md:w-40 h-auto" />
-              <h4 className="text-[24px] md:text-[28px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
+              <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
                 Fiesta
               </h4>
               <div className="space-y-2 text-stone-500 font-light leading-relaxed">
