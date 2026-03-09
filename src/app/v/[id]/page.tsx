@@ -55,7 +55,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
       <p className="uppercase tracking-[0.3em] text-[13px] md:text-[15px] text-stone-400">
         ¡Hola {datosInvitado.nombre}!
       </p>
-      <p className="italic text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
+      <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
         "{datosInvitado.mensaje}"
       </p>
     </div>
