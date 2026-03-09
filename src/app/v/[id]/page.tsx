@@ -30,10 +30,11 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
     <main 
       className="min-h-screen text-[#4a4a4a] font-montserrat antialiased relative"
       style={{ 
-        backgroundImage: 'url(/fondo-papel.jpg)', 
+        backgroundImage: 'url(/fondo_papel.jpeg)', 
         backgroundSize: 'cover', 
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center'
+
       }}
     >
       
@@ -44,7 +45,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
     
     {/* IMAGEN: Reducimos el max-width para que no ocupe tanto alto en vertical */}
     <img 
-      src="/logo-portada.png" 
+      src="/proyecto_nuevo.png" 
       alt="Ori & Tomi" 
       className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4" 
     />
