@@ -5,15 +5,17 @@
   --color-primario: #d9d5d4;
   --color-secundario: #000;
   --color-CBU: #a89670;
-  --color-fondo-regalo: #D1CECA;
+  --color-fondo-regalo: #ba806a;
+  --color-fondo-logistica: #efeadd;
+ 
 }
 
 /* Estilos para los botones (Reemplazando @apply que da error) */
 .btn-custom {
   display: inline-block;
   padding: 10px 40px;
-  background-color: var(--color-primario);
-  color: white;
+  background-color: var(--color-fondo-regalo);
+  color: var(--color-fondo-logistica);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -21,8 +23,8 @@
   border: 1px solid var(--color-primario);
   transition: all 0.3s ease;
   text-decoration: none;
-  font-weight: 500;
-  width: 100%; /* Mobile por defecto */
+  font-weight: 100;
+  width: 80%; /* Mobile por defecto */
   text-align: center;
 }
 

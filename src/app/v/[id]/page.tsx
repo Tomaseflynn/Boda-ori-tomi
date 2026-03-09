@@ -31,7 +31,8 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
       className="min-h-screen text-[#4a4a4a] font-montserrat antialiased relative"
       style={{ 
         backgroundImage: 'url(/fondo_papel.jpeg)', 
-        backgroundSize: 'cover', 
+        backgroundSize: '500px', 
+        backgroundRepeat: 'repeat',
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center'
 
@@ -66,33 +67,33 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
 </section>
 
       {/* --- SECCIÓN 2: LOGÍSTICA (Limpia y Escalable) --- */}
-      <section className="bg-white py-10 md:py-15 shadow-sm">
+      <section className="bg-[var(--color-fondo-logistica)] py-10 md:py-15 shadow-sm">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-15 items-start">
             
             {/* Componente: Ceremonia */}
             <article className="flex flex-col items-center text-center space-y-0 animate-fade-in-up">
-              <img src="/icono-ceremonia.svg" alt="Ceremonia" className="w-32 md:w-40 h-auto" />
+              <img src="/capilla_1.png" alt="Ceremonia" className="w-32 md:w-40 h-auto" />
               <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
                 Ceremonia
               </h4>
               <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-[17px] md:text-[23px] text-stone-900 font-medium italic">2 de Mayo <br/> 17:00 hs.</p>
+                <p className="text-[17px] md:text-[23px] text-stone-900 font-medium ">2 de Mayo <br/> 17:00 hs.</p>
                 <p>Parroquia Santa Ana <br/> Tandil, Buenos Aires.</p>
-                <p className="text-xs italic opacity-70">Recibí debajo las indicaciones para llegar.</p>
+                <p className="text-xs italic opacity-70">Comemzará Puntual.</p>
               </div>
               <a 
                 href="https://maps.app.goo.gl/ZVk8Qi21Le8ayyzy8" 
                 target="_blank" 
-                className="btn-custom" // Definido en globals.css para reusar
+                className="btn-custom mt-1" // Definido en globals.css para reusar
               >
-                Llegar a la ceremonia
+                Como llegar a la ceremonia
               </a>
             </article>
 
             {/* Componente: Fiesta */}
             <article className="flex flex-col items-center text-center space-y-0 animate-fade-in-up">
-              <img src="/icono-fiesta.svg" alt="Fiesta" className="w-32 md:w-40 h-auto" />
+              <img src="/bola_fiesta.png" alt="Fiesta" className="w-32 md:w-40 h-auto" />
               <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
                 Fiesta
               </h4>
