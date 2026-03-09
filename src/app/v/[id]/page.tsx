@@ -81,7 +81,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 <p className="text-xs italic opacity-70">Recibí debajo las indicaciones para llegar.</p>
               </div>
               <a 
-                href="http://maps..." 
+                href="https://maps.app.goo.gl/ZVk8Qi21Le8ayyzy8" 
                 target="_blank" 
                 className="btn-custom" // Definido en globals.css para reusar
               >
@@ -100,7 +100,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 <p>Tandil Golf Club <br/> ¡Te esperamos!</p>
               </div>
               <a 
-                href="http://maps..." 
+                href="https://maps.app.goo.gl/FL3RXe3LoEjSxVLM8" 
                 target="_blank" 
                 className="btn-custom"
               >
