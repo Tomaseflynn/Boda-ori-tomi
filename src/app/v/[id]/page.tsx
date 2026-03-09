@@ -45,14 +45,14 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
     
     {/* IMAGEN: Reducimos el max-width para que no ocupe tanto alto en vertical */}
     <img 
-      src="/proyecto_nuevo.png" 
+      src="/Proyecto_nuevo.png" 
       alt="Ori & Tomi" 
       className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4" 
     />
     
     {/* BLOQUE DE TEXTO: Reducimos mt-8 a mt-4 y pt-6 a pt-4 */}
     <div className="mt-4 space-y-3 animate-fade-in-up">
-      <p className="uppercase tracking-[0.3em] text-[13px] md:text-[15px] text-stone-400">
+      <p className="uppercase tracking-[0.3em] text-[15px] md:text-[20px] text-stone-400">
         ¡Hola {datosInvitado.nombre}!
       </p>
       <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
