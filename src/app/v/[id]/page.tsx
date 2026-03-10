@@ -142,9 +142,9 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
               </h5>
               <div className="space-y-5 text-left text-xs uppercase tracking-widest text-stone-600 font-light">
                 <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span> Oriana y Tomas</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 000000310001234567890</p>
+                <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339604630252128632</p>
                 <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> boda.ori.tomi</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> Galicia</p>
+                <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
               </div>
             </div>
           </div>
