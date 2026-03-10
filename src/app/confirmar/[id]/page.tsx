@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import invitadosData from '@/data/invitados.json';
@@ -37,15 +37,14 @@ const ConfirmarAsistenciaPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Recordá reemplazar estos valores con los de tu formulario de Google
-    const G_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSchIBgCPL1erJiE2TAOjGB-1XD4ly4WsTT2so8J-IrE07vZ1Q/formResponse";
+    const G_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe9YQMx7pJ7roFnvzgB353ytHGRUEOI_339DoK6--8r9jtZwg/formResponse";
     const G_FORM_FIELDS = {
-      nombre: 'entry.1111111111',
-      asistencia: 'entry.3333333333',
-      menu: 'entry.4444444444',
-      transporte: 'entry.5555555555',
-      alergias: 'entry.6666666666',
-      mensaje: 'entry.7777777777'
+      nombre: 'entry.1698799989',
+      asistencia: 'entry.1148889311',
+      menu: 'entry.1610928923',
+      transporte: 'entry.1017833039',
+      alergias: 'entry.1438344535',
+      mensaje: 'entry.1632298288'
     };
     const formData = new FormData();
     respuestas.forEach((respuesta) => {
