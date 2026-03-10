@@ -158,7 +158,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
           Confirmación de Asistencia
           </h4>
           <p className="text-stone-800 font-light text-lg px-4">
-            Esperamos que seas parte de este día tan especial para nosotros. Por favor, confirmá tu asistencia antes del 15 de Abril.
+            Esperamos que seas parte de este día tan especial para nosotros. <br/>Por favor, confirmá tu asistencia antes del 15 de Abril.
           </p>
           <button 
             onClick={() => setShowCbu(true)}
