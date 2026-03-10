@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import invitadosData from '@/data/invitados.json';
 
 interface Invitado {
@@ -8,8 +9,10 @@ interface Invitado {
   mensaje: string;
 }
 
-const ConfirmarAsistenciaPage = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const ConfirmarAsistenciaPage = () => {
+  const params = useParams();
+  const id = params.id as string;
+
   const datosInvitado = (invitadosData as Record<string, Invitado>)[id];
 
   const [respuestas, setRespuestas] = useState<any[]>(() => {
