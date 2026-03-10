@@ -153,7 +153,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
 
           {/* --- SECCIÓN 4: confirmar asistencia --- */}
       <section className=" py-20 text-center px-6">
-        <div className="max-w-[50%] mx-auto space-y-8 animate-fade-in-up">
+        <div className="max-w-md md:max-w-[50%] mx-auto space-y-8 animate-fade-in-up">
           <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
           Confirmación de Asistencia
           </h4>
