@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import invitadosData from '@/data/invitados.json';
 
 interface Invitado {
@@ -9,8 +10,9 @@ interface Invitado {
   mensaje: string;
 }
 
-export default function InvitacionPersonalizada({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default function InvitacionPersonalizada() {
+  const params = useParams();
+  const id = params.id as string;
   const [showCbu, setShowCbu] = useState(false);
 
   const datosInvitado = (invitadosData as Record<string, Invitado>)[id];
@@ -47,7 +49,7 @@ export default function InvitacionPersonalizada({ params }: { params: { id: stri
               ¡Hola {datosInvitado.nombre}!
             </p>
             <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
-              "{datosInvitado.mensaje}"
+              &quot;{datosInvitado.mensaje}&quot;
             </p>
           </div>
         </div>
