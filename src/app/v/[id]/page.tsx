@@ -151,6 +151,24 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
         )}
       </section>
 
+          {/* --- SECCIÓN 4: confirmar asistencia --- */}
+      <section className=" py-20 text-center px-6">
+        <div className="max-w-[50%] mx-auto space-y-8 animate-fade-in-up">
+          <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
+          Confirmación de Asistencia
+          </h4>
+          <p className="text-stone-800 font-light text-lg px-4">
+            Esperamos que seas parte de este día tan especial para nosotros. Por favor, confirmá tu asistencia antes del 15 de Abril.
+          </p>
+          <button 
+            onClick={() => setShowCbu(true)}
+            className="btn-custom"
+          >
+            CONFIRMAR ASISTENCIA
+          </button>
+        </div>
+         </section>
+         
       {/* --- FOOTER --- */}
       <footer className="py-12 text-center opacity-40">
          <p className="text-[10px] uppercase tracking-[0.4em] text-stone-500 font-extralight px-6">
