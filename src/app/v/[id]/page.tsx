@@ -161,7 +161,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
             Esperamos que seas parte de este día tan especial para nosotros. <br/>Por favor, confirmá tu asistencia antes del 15 de Abril.
           </p>
           <button 
-            onClick={() => setShowCbu(true)}
+             onClick={() => (window.location.href = `/confirmar/${id}`)}
             className="btn-custom"
           >
             CONFIRMAR ASISTENCIA
