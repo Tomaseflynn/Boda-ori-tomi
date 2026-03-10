@@ -4,9 +4,12 @@
 :root {
   --color-primario: #d9d5d4;
   --color-secundario: #000;
-  --color-CBU: #a89670;
-  --color-fondo-regalo: #ba806a;
+  --color-CBU: #e8d7c7;
+  --color-fondo-regalo: #6d7a71;
   --color-fondo-logistica: #efeadd;
+  --verde-oscuro: #6d7a71;
+  --beige-claro: #efebdf;
+  --respaldo:#ba806a;
  
 }
 
@@ -31,8 +34,8 @@
 .btn-custom-alt {
   display: inline-block;
   padding: 10px 40px;
-  background-color: white;
-  color: var(--color-primario);
+  background-color: var(--color-fondo-logistica);
+  color: var(--color-fondo-regalo);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;

@@ -78,9 +78,9 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 Ceremonia
               </h4>
               <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-[17px] md:text-[23px] text-stone-900 font-medium ">2 de Mayo <br/> 17:00 hs.</p>
+                <p className="text-lg text-stone-900 font-medium ">2 de Mayo <br/> 17:00 hs.</p>
                 <p>Parroquia Santa Ana <br/> Tandil, Buenos Aires.</p>
-                <p className="text-xs italic opacity-70">Comemzará Puntual.</p>
+                <p className="text-xs italic opacity-70">Comenzará Puntual.</p>
               </div>
               <a 
                 href="https://maps.app.goo.gl/ZVk8Qi21Le8ayyzy8" 
@@ -98,13 +98,13 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 Fiesta
               </h4>
               <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-stone-800 font-medium italic text-lg">Después de la ceremonia</p>
+                <p className="text-stone-800 font-medium text-lg">Después de la ceremonia<br/> 19:00 hs</p>
                 <p>Tandil Golf Club <br/> ¡Te esperamos!</p>
               </div>
               <a 
                 href="https://maps.app.goo.gl/FL3RXe3LoEjSxVLM8" 
                 target="_blank" 
-                className="btn-custom"
+                className="btn-custom mt-1"
               >
                 Llegar a la fiesta
               </a>
@@ -115,11 +115,11 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
       </section>
 
       {/* --- SECCIÓN 3: REGALOS --- */}
-      <section className="bg-[#D1CECA] py-20 text-center px-6">
+      <section className="bg-[var(--color-fondo-regalo)] py-10 text-center px-6">
         <div className="max-w-md mx-auto space-y-8 animate-fade-in-up">
-          <img src="/icono-regalo.svg" className="w-32 mx-auto" alt="Regalo" />
+          <img src="/regalito_blanco_2.png" className="w-34 mx-auto" alt="Regalo" />
           <p className="text-white font-light text-lg italic px-4">
-            Si deseás realizarnos un regalo podés colaborar con nuestra Luna de Miel...
+            Tu presencia es nuestro mejor regalo, pero si querés colaborar con nuestro proyecto de vida juntos, aquí te dejamos los datos.
           </p>
           <button 
             onClick={() => setShowCbu(true)}
