@@ -37,7 +37,7 @@ const ConfirmarAsistenciaPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const G_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe9YQMx7pJ7roFnvzgB353ytHGRUEOI_339DoK6--8r9jtZwg/formResponse";
+    const G_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdsDQ0Q0jk74w5seBu26o2t_-ni7bOOS_eaISLez-fZYQ9gfw/formResponse";
     const G_FORM_FIELDS = {
       nombre: 'entry.1698799989',
       asistencia: 'entry.1148889311',
