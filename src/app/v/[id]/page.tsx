@@ -9,20 +9,146 @@ interface Invitado {
   mensaje: string;
 }
 
+// El parámetro `params` puede ser una promesa, así que lo manejamos como `any`
 export default function InvitacionPersonalizada({ params }: { params: any }) {
   const [id, setId] = useState<string | null>(null);
-  const [showCbu, setShowCbu] = useState(false);
+  const [datosInvitado, setDatosInvitado] = useState<Invitado | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
+  // Estados del Modal y Formulario
+  const [showCbu, setShowCbu] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Campos del formulario
+  const [nombre, setNombre] = useState('');
+  const [asistencia, setAsistencia] = useState('');
+  const [restriccion, setRestriccion] = useState('');
+  const [alergias, setAlergias] = useState('');
+  const [bebidas, setBebidas] = useState('');
+
+  const [currentPase, setCurrentPase] = useState(1);
+  const [allResponses, setAllResponses] = useState<any[]>([]);
+
+  const restriccionOptions = ['Ninguna', 'Vegetariano', 'Vegano', 'Celíaco'];
+
+  // --- PASO 1: Obtener el ID desde los parámetros (que pueden ser una promesa) ---
   useEffect(() => {
-    params.then((res: any) => setId(res.id));
+    // Esta función maneja la lógica, sea una promesa o un objeto directo.
+    const resolveParams = async () => {
+      try {
+        const resolvedParams = await params;
+        if (resolvedParams && resolvedParams.id) {
+          setId(resolvedParams.id);
+        } else {
+          // Si no hay ID, no podemos continuar.
+          setError('ID de invitación no encontrado en la URL.');
+        }
+      } catch (e) {
+        setError('Error al resolver los parámetros de la página.');
+      }
+    };
+    resolveParams();
   }, [params]);
 
-  if (!id) return null;
-  const datosInvitado = (invitadosData as Record<string, Invitado>)[id];
+  // --- PASO 2: Una vez que tenemos el ID, buscar los datos del invitado ---
+  useEffect(() => {
+    // Este efecto se ejecuta solo si el `id` cambia (es decir, después del PASO 1)
+    if (id) {
+      const dataKeys = Object.keys(invitadosData);
+      // Búsqueda sin distinguir mayúsculas/minúsculas
+      const matchingKey = dataKeys.find(key => key.toLowerCase() === id.toLowerCase());
+      
+      if (matchingKey) {
+        const invitado = (invitadosData as Record<string, Invitado>)[matchingKey];
+        setDatosInvitado(invitado);
+      } else {
+        setError('Invitación no encontrada...');
+      }
+    }
+  }, [id]);
 
+  const resetFormFields = () => {
+    setNombre('');
+    setAsistencia('');
+    setRestriccion('');
+    setAlergias('');
+    setBebidas('');
+  };
+
+  const handleOpenForm = () => {
+    setCurrentPase(1);
+    setAllResponses([]);
+    setFormSubmitted(false);
+    resetFormFields();
+    setShowForm(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    let fullRestriccion = restriccion;
+    if (restriccion && restriccion !== 'Ninguna' && alergias) {
+      fullRestriccion = `${restriccion}, ${alergias}`;
+    } else if (alergias) {
+      fullRestriccion = alergias;
+    }
+
+    const currentResponse = {
+      nombre,
+      asistencia,
+      restriccion: asistencia === 'Si, confirmo' ? fullRestriccion : 'N/A',
+      bebidas: asistencia === 'Si, confirmo' ? bebidas : 'N/A',
+      invitacionId: id,
+      paseNum: currentPase
+    };
+
+    if (currentPase < datosInvitado!.pases) {
+      setAllResponses(prev => [...prev, currentResponse]);
+      setCurrentPase(prev => prev + 1);
+      resetFormFields();
+      setIsSubmitting(false);
+    } else {
+      const finalResponses = [...allResponses, currentResponse];
+      
+      try {
+        const response = await fetch('/api/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(finalResponses),
+        });
+
+        if (!response.ok) {
+          throw new Error('Fallo en el envío');
+        }
+
+        setShowForm(false);
+        setFormSubmitted(true);
+
+      } catch (error) {
+        console.error("Error submitting to API route:", error);
+        // Aquí podrías mostrar un mensaje de error al usuario
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
+
+  // Si hubo un error en cualquier punto, lo mostramos.
+  if (error) return (
+    <div className="flex h-screen items-center justify-center font-montserrat text-stone-400">
+      {error}
+    </div>
+  );
+
+  // Mientras no tengamos los datos del invitado, mostramos el estado de carga.
   if (!datosInvitado) return (
     <div className="flex h-screen items-center justify-center font-montserrat text-stone-400">
-      Invitación no encontrada...
+      Cargando invitación...
     </div>
   );
 
@@ -35,38 +161,30 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
         backgroundRepeat: 'repeat',
         backgroundAttachment: 'fixed',
         backgroundPosition: 'center'
-
       }}
     >
       
-{/* --- SECCIÓN 1: PORTADA --- */}
-<section className="relative flex h-screen flex-col items-center justify-center text-center px-6 pt-6 overflow-hidden">
-  {/* Contenedor principal con un poco menos de espacio superior para subir todo */}
-  <div className="flex flex-col items-center animate-fade-in-portada mt-[-5vh]">
-    
-    {/* IMAGEN: Reducimos el max-width para que no ocupe tanto alto en vertical */}
-    <img 
-      src="/Proyecto_nuevo.png" 
-      alt="Ori & Tomi" 
-      className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4" 
-    />
-    
-    {/* BLOQUE DE TEXTO: Reducimos mt-8 a mt-4 y pt-6 a pt-4 */}
-    <div className="mt-4 space-y-3 animate-fade-in-up">
-      <p className="uppercase tracking-[0.3em] text-[15px] md:text-[20px] text-stone-400">
-        ¡Hola {datosInvitado.nombre}!
-      </p>
-      <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
-        "{datosInvitado.mensaje}"
-      </p>
-    </div>
-  </div>
+      {/* --- SECCIÓN 1: PORTADA --- */}
+      <section className="relative flex h-screen flex-col items-center justify-center text-center px-6 pt-6 overflow-hidden">
+        <div className="flex flex-col items-center animate-fade-in-portada mt-[-5vh]">
+          <img 
+            src="/Proyecto_nuevo.png" 
+            alt="Ori & Tomi" 
+            className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4" 
+          />
+          <div className="mt-4 space-y-3 animate-fade-in-up">
+            <p className="uppercase tracking-[0.3em] text-[15px] md:text-[20px] text-stone-400">
+              ¡Hola {datosInvitado.nombre}!
+            </p>
+            <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
+              "{datosInvitado.mensaje}"
+            </p>
+          </div>
+        </div>
+        <div className="scroll-down"></div> 
+      </section>
 
-  {/* FLECHA: Asegurate que en globals.css tenga 'bottom: 20px' o similar para que no se pierda */}
-  <div className="scroll-down"></div> 
-</section>
-
-      {/* --- SECCIÓN 2: LOGÍSTICA (Limpia y Escalable) --- */}
+      {/* --- SECCIÓN 2: LOGÍSTICA --- */}
       <section className="bg-[var(--color-fondo-logistica)] py-10 md:py-15 shadow-sm">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-15 items-start">
@@ -85,7 +203,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
               <a 
                 href="https://maps.app.goo.gl/ZVk8Qi21Le8ayyzy8" 
                 target="_blank" 
-                className="btn-custom mt-1" // Definido en globals.css para reusar
+                className="btn-custom mt-1"
               >
                 Como llegar a la ceremonia
               </a>
@@ -151,8 +269,8 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
         )}
       </section>
 
-          {/* --- SECCIÓN 4: confirmar asistencia --- */}
-      <section className=" py-20 text-center px-6">
+      {/* --- SECCIÓN 4: CONFIRMAR ASISTENCIA --- */}
+      <section className="py-20 text-center px-6">
         <div className="max-w-md md:max-w-[50%] mx-auto space-y-8 animate-fade-in-up">
           <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
           Confirmación de Asistencia
@@ -160,15 +278,120 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
           <p className="text-stone-800 font-light text-lg px-4">
             Esperamos que seas parte de este día tan especial para nosotros. <br/>Por favor, confirmá tu asistencia antes del 15 de Abril.
           </p>
-          <button 
-            onClick={() => (window.location.href = `/confirmar/${id}`)}
-            className="btn-custom"
-          >
+          <button onClick={handleOpenForm} className="btn-custom">
             CONFIRMAR ASISTENCIA
           </button>
         </div>
-         </section>
-         
+      </section>
+      
+      {/* FORM MODAL */}
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
+          <div className="relative w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setShowForm(false)}
+              className="absolute right-5 top-5 text-stone-300 hover:text-stone-500 text-xl"
+            >
+              ✕
+            </button>
+            <h5 className="mb-6 border-b border-stone-100 pb-4 text-left font-montserrat italic text-2xl text-stone-800">
+              Confirmación de Asistencia {datosInvitado.pases > 1 ? `(${currentPase} de ${datosInvitado.pases})` : ''}
+            </h5>
+            <form onSubmit={handleSubmit} className="space-y-4 text-left">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Nombre y apellido *</label>
+                <input
+                  type="text"
+                  value={nombre}
+                  onChange={e => setNombre(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Asistencia *</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center">
+                    <input type="radio" name="asistencia" value="Si, confirmo" required checked={asistencia === 'Si, confirmo'} onChange={(e) => setAsistencia(e.target.value)} className="mr-2"/>
+                    Sí, confirmo
+                  </label>
+                  <label className="flex items-center">
+                    <input type="radio" name="asistencia" value="No podré asistir" required checked={asistencia === 'No podré asistir'} onChange={(e) => setAsistencia(e.target.value)} className="mr-2"/>
+                    No podré asistir
+                  </label>
+                </div>
+              </div>
+
+              {asistencia === 'Si, confirmo' && (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Restricciones alimentarias *</label>
+                    <div className='flex flex-wrap gap-x-4 gap-y-2'>
+                      {restriccionOptions.map(option => (
+                         <label key={option} className="flex items-center">
+                          <input type="radio" name="restriccion" value={option} required={asistencia === 'Si, confirmo'} checked={restriccion === option} onChange={e => setRestriccion(e.target.value)} className="mr-2"/>
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="alergias" className="block text-sm font-medium text-gray-700">
+                    Alergias o más restricciones (opcional)
+                    </label>
+                    <input
+                      id="alergias"
+                      value={alergias}
+                      onChange={(e) => setAlergias(e.target.value)}
+                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="bebidas" className="block text-sm font-medium text-gray-700">
+                    ¿Qué bebidas no pueden faltar? *
+                    </label>
+                    <input
+                      id="bebidas"
+                      value={bebidas}
+                      onChange={(e) => setBebidas(e.target.value)}
+                       className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      required={asistencia === 'Si, confirmo'}
+                    />
+                  </div>
+                </>
+              )}
+
+              <button type="submit" disabled={isSubmitting} className="btn-custom w-full mt-4 disabled:opacity-50">
+                 {isSubmitting ? 'Enviando...' : (currentPase < datosInvitado.pases ? 'Siguiente Invitado' : 'Enviar Confirmación')}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* SUCCESS MODAL */}
+      {formSubmitted && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
+          <div className="relative w-full max-w-sm rounded-2xl bg-white p-10 shadow-2xl animate-fade-in-up text-center">
+            <h5 className="mb-4 font-montserrat italic text-2xl text-stone-800">
+              ¡Gracias por confirmar!
+            </h5>
+            <p className="text-stone-500">
+              Tu confirmación ha sido enviada con éxito.
+            </p>
+            <button
+              onClick={() => setFormSubmitted(false)}
+              className="btn-custom mt-6"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* --- FOOTER --- */}
       <footer className="py-12 text-center opacity-40">
          <p className="text-[10px] uppercase tracking-[0.4em] text-stone-500 font-extralight px-6">
