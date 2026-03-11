@@ -62,6 +62,17 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
     setShowForm(true);
   };
 
+  // utilidad para copiar texto al portapapeles
+  const copyToClipboard = (text: string) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copiado al portapapeles');
+      }).catch(() => {
+        // fallback silencioso
+      });
+    }
+  };
+
   // Si hubo un error en cualquier punto, lo mostramos.
   if (error) return (
     <div className="flex h-screen items-center justify-center font-montserrat text-stone-400">
@@ -174,7 +185,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
         {/* Modal: Extraído lógicamente */}
         {showCbu && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
-            <div className="relative w-full max-w-sm rounded-2xl bg-white p-10 shadow-2xl animate-fade-in-up">
+            <div className="relative w-full max-w-md md:max-w-lg rounded-2xl bg-white p-10 shadow-2xl animate-fade-in-up">
               <button 
                 onClick={() => setShowCbu(false)} 
                 className="absolute right-5 top-5 text-stone-300 hover:text-stone-500 text-xl"
@@ -183,21 +194,49 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 Datos Bancarios
               </h5>
               <div className="space-y-5 text-left text-xs uppercase tracking-widest text-stone-600 font-light">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   {/* Cuenta ARS */}
-                  <div>
+                  <div className="space-y-3">
                     <p><span className="mb-1 block text-[9px] text-stone-300">Moneda</span> ARS</p>
                     <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span> Tomas Elias, Flynn. y Oriana, Di Carlo</p>
-                    <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339603630258941908</p>
-                    <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> TOMI.ORI.ARS</p>
+                    <p className="flex items-center">
+                      <span className="mr-2"><span className="mb-1 block text-[9px] text-stone-300">CBU </span>0140339603630258941908</span>
+                      <button type="button" onClick={() => copyToClipboard('0140339603630258941908')} className="ml-2 text-stone-500 hover:text-stone-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h8m-6 4h4m-6-8h4m5-2a2 2 0 00-2-2h-3.172a2 2 0 01-1.414-.586l-.828-.828A2 2 0 0010.172 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z" />
+                        </svg>
+                      </button>
+                    </p>
+                    <p className="flex items-center">
+                      <span className="mr-2"><span className="mb-1 block text-[9px] text-stone-300">Alias </span>TOMI.ORI.ARS</span>
+                      <button type="button" onClick={() => copyToClipboard('TOMI.ORI.ARS')} className="ml-2 text-stone-500 hover:text-stone-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h8m-6 4h4m-6-8h4m5-2a2 2 0 00-2-2h-3.172a2 2 0 01-1.414-.586l-.828-.828A2 2 0 0010.172 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z" />
+                        </svg>
+                      </button>
+                    </p>
                     <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
                   </div>
                   {/* Cuenta USD */}
-                  <div>
+                  <div className="space-y-3">
                     <p><span className="mb-1 block text-[9px] text-stone-300">Moneda</span> USD</p>
                     <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span>Tomas Elias, Flynn. y Oriana, Di Carlo</p>
-                    <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339604630252128632</p>
-                    <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> TOMI.ORI.USD</p>
+                    <p className="flex items-center">
+                      <span className="mr-2"><span className="mb-1 block text-[9px] text-stone-300">CBU </span>0140339604630252128632</span>
+                      <button type="button" onClick={() => copyToClipboard('0140339604630252128632')} className="ml-2 text-stone-500 hover:text-stone-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h8m-6 4h4m-6-8h4m5-2a2 2 0 00-2-2h-3.172a2 2 0 01-1.414-.586l-.828-.828A2 2 0 0010.172 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z" />
+                        </svg>
+                      </button>
+                    </p>
+                    <p className="flex items-center">
+                      <span className="mr-2"><span className="mb-1 block text-[9px] text-stone-300">Alias </span>TOMI.ORI.USD</span>
+                      <button type="button" onClick={() => copyToClipboard('TOMI.ORI.USD')} className="ml-2 text-stone-500 hover:text-stone-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h8m-6 4h4m-6-8h4m5-2a2 2 0 00-2-2h-3.172a2 2 0 01-1.414-.586l-.828-.828A2 2 0 0010.172 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2z" />
+                        </svg>
+                      </button>
+                    </p>
                     <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
                   </div>
                 </div>
