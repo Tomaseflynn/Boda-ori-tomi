@@ -15,8 +15,8 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "Invitación Boda - Ori & Tomi",
   icons: {
-    icon: "public/favicon.ico",
-    shortcut: "public/favicon.ico",
+    icon: "favicon.ico",
+    shortcut: "favicon.ico",
   },
 };
 
