@@ -55,15 +55,15 @@ export default function RsvpForm({
 
     const finished = addResponse(currentResponse);
 
-    if (!finished) {
+    if (!finished.finished) {
       resetFormFields();
       setIsSubmitting(false);
       return;
     }
 
-    // Si llegamos al último pase, mandamos todo
+    // Si llegamos al último pase, mandamos todo con el nuevo array de respuestas
     try {
-      await submitAll();
+      await submitAll(finished.responses);
       onSuccess();
     } catch (err) {
       console.error('Error submitting to API route:', err);

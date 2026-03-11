@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 // Este es el cuerpo de la API Route que recibirá los datos del formulario.
 export async function POST(request: Request) {
   const body = await request.json();
+  console.log('Datos recibidos en /api/submit:', body);
 
   try {
     // 1. AUTENTICACIÓN

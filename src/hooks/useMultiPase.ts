@@ -14,13 +14,14 @@ export default function useMultiPase(totalPases: number) {
   const [allResponses, setAllResponses] = useState<ResponseRow[]>([]);
 
   const addResponse = (response: ResponseRow) => {
-    setAllResponses(prev => [...prev, response]);
+    const updatedResponses = [...allResponses, response];
+    setAllResponses(updatedResponses);
 
     if (currentPase < totalPases) {
       setCurrentPase(prev => prev + 1);
-      return false; // aún quedan pases por completar
+      return { finished: false, responses: updatedResponses }; // aún quedan pases
     } else {
-      return true; // se alcanzó el último pase
+      return { finished: true, responses: updatedResponses }; // se alcanzó el último pase
     }
   };
 
@@ -29,15 +30,16 @@ export default function useMultiPase(totalPases: number) {
     setAllResponses([]);
   };
 
-  const submitAll = async () => {
-    if (allResponses.length === 0) return null;
-
+  const submitAll = async (responsesToSubmit: ResponseRow[]) => {
+    if (responsesToSubmit.length === 0) return null;
+    console.log('Enviando respuestas acumuladas:', responsesToSubmit);
+    
     const response = await fetch('/api/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(allResponses),
+      body: JSON.stringify(responsesToSubmit),
     });
 
     if (!response.ok) {
