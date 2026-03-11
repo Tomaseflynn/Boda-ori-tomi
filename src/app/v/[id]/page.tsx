@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -10,8 +9,9 @@ interface Invitado {
   mensaje: string;
 }
 
-export default function InvitacionPersonalizada({ params }: { params: { id: string } }) {
-  const { id } = params;
+// El parámetro `params` puede ser una promesa, así que lo manejamos como `any`
+export default function InvitacionPersonalizada({ params }: { params: any }) {
+  const [id, setId] = useState<string | null>(null);
   const [datosInvitado, setDatosInvitado] = useState<Invitado | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,10 +33,35 @@ export default function InvitacionPersonalizada({ params }: { params: { id: stri
 
   const restriccionOptions = ['Ninguna', 'Vegetariano', 'Vegano', 'Celíaco'];
 
+  // --- PASO 1: Obtener el ID desde los parámetros (que pueden ser una promesa) ---
   useEffect(() => {
+    // Esta función maneja la lógica, sea una promesa o un objeto directo.
+    const resolveParams = async () => {
+      try {
+        const resolvedParams = await params;
+        if (resolvedParams && resolvedParams.id) {
+          setId(resolvedParams.id);
+        } else {
+          // Si no hay ID, no podemos continuar.
+          setError('ID de invitación no encontrado en la URL.');
+        }
+      } catch (e) {
+        setError('Error al resolver los parámetros de la página.');
+      }
+    };
+    resolveParams();
+  }, [params]);
+
+  // --- PASO 2: Una vez que tenemos el ID, buscar los datos del invitado ---
+  useEffect(() => {
+    // Este efecto se ejecuta solo si el `id` cambia (es decir, después del PASO 1)
     if (id) {
-      const invitado = (invitadosData as Record<string, Invitado>)[id];
-      if (invitado) {
+      const dataKeys = Object.keys(invitadosData);
+      // Búsqueda sin distinguir mayúsculas/minúsculas
+      const matchingKey = dataKeys.find(key => key.toLowerCase() === id.toLowerCase());
+      
+      if (matchingKey) {
+        const invitado = (invitadosData as Record<string, Invitado>)[matchingKey];
         setDatosInvitado(invitado);
       } else {
         setError('Invitación no encontrada...');
@@ -113,12 +138,14 @@ export default function InvitacionPersonalizada({ params }: { params: { id: stri
     }
   };
 
+  // Si hubo un error en cualquier punto, lo mostramos.
   if (error) return (
     <div className="flex h-screen items-center justify-center font-montserrat text-stone-400">
       {error}
     </div>
   );
 
+  // Mientras no tengamos los datos del invitado, mostramos el estado de carga.
   if (!datosInvitado) return (
     <div className="flex h-screen items-center justify-center font-montserrat text-stone-400">
       Cargando invitación...
