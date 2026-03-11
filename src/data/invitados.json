@@ -552,6 +552,16 @@
     "nombre": "Jere",
     "pases": 2,
     "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "TMF": {
+    "nombre": "Tere",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en nuestro día especial. ¡Te esperamos!"
   }
-
+,
+  "ALF": {
+    "nombre": "Agus",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en nuestro día especial. ¡Te esperamos!"
+  }
 }
