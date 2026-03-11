@@ -10,11 +10,11 @@ export default function ConsoleEasterEgg() {
     );
     console.log(
       "%cSi estás acá, sos parte especial de nuestra boda 💕",
-      "color: #8b5a8e; font-size: 14px; font-style: italic;"
+      "color: #8b5a8e; font-size: 16px; font-style: italic;"
     );
     console.log(
       "%cHecho por Tomi, Ori y Gemini, con mucho amor ❤️",
-      "color: #4a4a4a; font-size: 12px;"
+      "color: #5b6b15; font-size: 16px;"
     );
   }, []);
 

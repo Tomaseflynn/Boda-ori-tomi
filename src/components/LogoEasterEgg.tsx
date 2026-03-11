@@ -72,7 +72,7 @@ export default function LogoEasterEgg({ src, alt, className }: LogoEasterEggProp
         alt={alt}
         className={`${className} cursor-pointer hover:opacity-80 transition-opacity`}
         onClick={handleClick}
-        title={clickCount > 0 ? `${5 - clickCount} clic${5 - clickCount !== 1 ? 's' : ''} más...` : ''}
+        title={clickCount > 0 ? `${8 - clickCount} clic${8 - clickCount !== 1 ? 's' : ''} más...` : ''}
       />
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-[9998] animate-pulse">
