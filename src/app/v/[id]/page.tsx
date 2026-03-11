@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import invitadosData from '@/data/invitados.json';
 import RsvpForm from '@/components/RsvpForm';
+import LogoEasterEgg from '@/components/LogoEasterEgg';
 
 interface Invitado {
   nombre: string;
@@ -102,10 +103,10 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
       {/* --- SECCIÓN 1: PORTADA --- */}
       <section className="relative flex h-screen flex-col items-center justify-center text-center px-6 pt-6 overflow-hidden">
         <div className="flex flex-col items-center animate-fade-in-portada mt-[-5vh]">
-          <img 
-            src="/Proyecto_nuevo.png" 
-            alt="Ori & Tomi" 
-            className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4" 
+          <LogoEasterEgg
+            src="/Proyecto_nuevo.png"
+            alt="Ori & Tomi"
+            className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4"
           />
           <div className="mt-4 space-y-3 animate-fade-in-up">
             <p className="uppercase tracking-[0.3em] text-[15px] md:text-[20px] text-stone-400">
