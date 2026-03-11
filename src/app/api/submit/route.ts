@@ -1,4 +1,3 @@
-'''
 import { google } from 'googleapis';
 import { NextResponse } from 'next/server';
 
@@ -53,4 +52,3 @@ export async function POST(request: Request) {
     return new NextResponse('Ocurrió un error al procesar la confirmación.', { status: 500 });
   }
 }
-'''
