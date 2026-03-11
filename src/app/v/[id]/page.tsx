@@ -198,7 +198,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   {/* Cuenta ARS */}
                   <div className="space-y-3">
-                    <p><span className="mb-1 block text-[9px] text-stone-300">Moneda</span> ARS</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Moneda</span> Pesos</p>
                     <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span> Tomas Elias, Flynn. y Oriana, Di Carlo</p>
                     <p className="flex items-center">
                       <span className="mr-2"><span className="mb-1 block text-[9px] text-stone-300">CBU </span>0140339603630258941908</span>

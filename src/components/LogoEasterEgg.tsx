@@ -14,7 +14,7 @@ export default function LogoEasterEgg({ src, alt, className }: LogoEasterEggProp
   const handleClick = () => {
     setClickCount(prev => prev + 1);
 
-    if (clickCount + 1 === 5) {
+    if (clickCount + 1 === 8) {
       triggerEasterEgg();
       setClickCount(0);
     } else {
