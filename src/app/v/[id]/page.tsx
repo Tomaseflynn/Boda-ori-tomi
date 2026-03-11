@@ -1,228 +1,247 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import invitadosData from '@/data/invitados.json';
+import invitados from '@/data/invitados.json';
+import Image from 'next/image';
 
-interface Invitado {
+type Invitado = {
+  id: string;
   nombre: string;
   pases: number;
-  mensaje: string;
-}
+};
 
-export default function InvitacionPersonalizada() {
+// Define las props del componente de la página
+export default function InvitadoPage() {
   const params = useParams();
-  const id = params.id as string;
-  const [showCbu, setShowCbu] = useState(false);
+  const id = params?.id as string;
+
+  const [datosInvitado, setDatosInvitado] = useState<Invitado | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // Estados para el formulario
   const [showForm, setShowForm] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const datosInvitado = (invitadosData as Record<string, Invitado>)[id];
-
-  // Form state
-  const [currentPase, setCurrentPase] = useState(1);
+  
+  // Estados para los campos del formulario
   const [nombre, setNombre] = useState('');
   const [asistencia, setAsistencia] = useState('');
   const [restriccion, setRestriccion] = useState('');
   const [alergias, setAlergias] = useState('');
   const [bebidas, setBebidas] = useState('');
-  
+
+  const [currentPase, setCurrentPase] = useState(1);
+  const [allResponses, setAllResponses] = useState<any[]>([]);
+
+  const restriccionOptions = [
+    'Ninguna',
+    'Vegetariano',
+    'Vegano',
+    'Celíaco',
+  ];
+
   useEffect(() => {
-    // Pre-fill required fields if guest is not attending to ensure submission
-    if (asistencia === 'No podré asistir') {
-        setRestriccion('No aplica');
-        setAlergias('No aplica');
-        setBebidas('No aplica');
-    } else {
-        // Clear them if they switch back to attending
+    if (id) {
+      const invitadoEncontrado = invitados.find(inv => inv.id === id);
+      if (invitadoEncontrado) {
+        setDatosInvitado(invitadoEncontrado);
+      } else {
+        setError('La invitación no es válida. Por favor, verificá el link.');
+      }
+    }
+  }, [id]);
+
+    const resetFormFields = () => {
+        setNombre('');
+        setAsistencia('');
         setRestriccion('');
         setAlergias('');
         setBebidas('');
-    }
-  }, [asistencia]);
+      };
+    
+      const handleOpenForm = () => {
+        setCurrentPase(1);
+        setAllResponses([]);
+        setFormSubmitted(false);
+        resetFormFields();
+        setShowForm(true);
+      };
+    
+      const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+      
+        // Combine restriction and allergy fields
+        let fullRestriccion = restriccion;
+        if (restriccion && restriccion !== 'Ninguna' && alergias) {
+          fullRestriccion = `${restriccion}, ${alergias}`;
+        } else if (alergias) {
+          fullRestriccion = alergias;
+        }
 
+        const currentResponse = {
+          nombre,
+          asistencia,
+          restriccion: asistencia === 'Si, confirmo' ? fullRestriccion : 'N/A',
+          bebidas: asistencia === 'Si, confirmo' ? bebidas : 'N/A',
+          invitacionId: id,
+          paseNum: currentPase
+        };
+      
+        if (currentPase < datosInvitado!.pases) {
+          setAllResponses(prev => [...prev, currentResponse]);
+          setCurrentPase(prev => prev + 1);
+          resetFormFields();
+          setIsSubmitting(false);
+        } else {
+          const finalResponses = [...allResponses, currentResponse];
+      
+          const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSe9YQMx7pJ7roFnvzgB353ytHGRUEOI_339DoK6--8r9jtZwg/formResponse';
+      
+          // Correct Entry IDs from your form's source code
+          const entryIds = {
+            nombre: 'entry.757304647',
+            asistencia: 'entry.404868253',
+            restricciones: 'entry.1985028282', // Combined field for restrictions
+            bebidas: 'entry.450490978',
+          };
+      
+          const submissionPromises = finalResponses.map(response => {
+            const formData = new FormData();
+            formData.append(entryIds.nombre, response.nombre);
+            formData.append(entryIds.asistencia, response.asistencia);
+            formData.append(entryIds.restricciones, response.restriccion); // Submit combined data
+            formData.append(entryIds.bebidas, response.bebidas);
+      
+            return fetch(googleFormUrl, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors' 
+            });
+          });
+      
+          try {
+            await Promise.all(submissionPromises);
+            setShowForm(false);
+            setFormSubmitted(true);
+          } catch (error) {
+            console.error("Error submitting to Google Form:", error);
+          } finally {
+            setIsSubmitting(false);
+          }
+        }
+      };
 
-  if (!datosInvitado) {
+  if (error) {
     return (
-      <div className="flex h-screen items-center justify-center font-montserrat text-stone-400">
-        Invitación no encontrada...
-      </div>
+      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-stone-100 text-stone-800 font-serif">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Error</h1>
+          <p>{error}</p>
+        </div>
+      </main>
     );
   }
 
-  const resetFormFields = () => {
-    setNombre('');
-    setAsistencia('');
-    setRestriccion('');
-    setAlergias('');
-    setBebidas('');
-  };
-
-  const handleOpenForm = () => {
-    setCurrentPase(1);
-    setFormSubmitted(false);
-    resetFormFields();
-    setShowForm(true);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdsDQ0Q0jk74w5seBu26o2t_-ni7bOOS_eaISLez-fZYQ9gfw/formResponse';
-    const form = document.createElement('form');
-    form.action = googleFormUrl;
-    form.method = 'POST';
-    form.target = 'hidden_iframe';
-
-    const fields = {
-      'entry.1889319655': nombre,
-      'entry.1433931608': asistencia,
-      'entry.839332354': asistencia === 'Si, confirmo' ? restriccion : 'No aplica',
-      'entry.1518338349': asistencia === 'Si, confirmo' ? alergias : 'No aplica',
-      'entry.111869860': asistencia === 'Si, confirmo' ? bebidas : 'No aplica',
-    };
-
-    for (const key in fields) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = fields[key as keyof typeof fields];
-        form.appendChild(input);
-    }
-    
-    document.body.appendChild(form);
-    form.submit();
-    
-    // Cleanup the form after submission
-    setTimeout(() => {
-        document.body.removeChild(form);
-        setIsSubmitting(false);
-        if (currentPase >= datosInvitado.pases) {
-            setFormSubmitted(true);
-            setShowForm(false);
-        } else {
-            setCurrentPase(currentPase + 1);
-            resetFormFields();
-        }
-    }, 500);
-  };
-
-  const restriccionOptions = [
-    "Sin restricciones",
-    "Vegetariano/a",
-    "Vegano/a",
-    "Celíaco/a",
-    "Diabético/a"
-  ];
+  if (!datosInvitado) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-stone-100">
+        <p className="text-stone-500 animate-pulse">Cargando invitación...</p>
+      </main>
+    );
+  }
 
   return (
-    <main
-      className="min-h-screen text-[#4a4a4a] font-montserrat antialiased relative"
-      style={{
-        backgroundImage: 'url(/fondo_papel.jpeg)',
-        backgroundSize: '500px',
-        backgroundRepeat: 'repeat',
-        backgroundAttachment: 'fixed',
-        backgroundPosition: 'center',
-      }}
-    >
+    <main className="bg-stone-100 text-stone-800 font-serif">
       {/* --- SECCIÓN 1: PORTADA --- */}
-      <section className="relative flex h-screen flex-col items-center justify-center text-center px-6 pt-6 overflow-hidden">
-        <div className="flex flex-col items-center animate-fade-in-portada mt-[-5vh]">
-          <img
-            src="/Proyecto_nuevo.png"
-            alt="Ori & Tomi"
-            className="w-full max-w-[280px] md:max-w-[420px] h-auto mb-4"
-          />
-          <div className="mt-4 space-y-3 animate-fade-in-up">
-            <p className="uppercase tracking-[0.3em] text-[15px] md:text-[20px] text-stone-400">
-              ¡Hola {datosInvitado.nombre}!
-            </p>
-            <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
-              &quot;{datosInvitado.mensaje}&quot;
-            </p>
-          </div>
+      <section className="relative h-screen flex flex-col items-center justify-center text-center -mt-16">
+        <div 
+          className="absolute inset-0 bg-cover bg-center" 
+          style={{ 
+            backgroundImage: "url('/fondo-papel.jpg')",
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-100 via-transparent to-transparent"></div>
         </div>
-        <div className="scroll-down"></div>
+        <div className="relative z-10 flex flex-col items-center justify-center h-full px-4">
+          <div className="animate-fade-in-up">
+            <Image
+              src="/logo-portada.png"
+              alt="Nombres de los novios"
+              width={500}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+          <p className="text-2xl md:text-3xl tracking-[0.4em] uppercase font-light text-stone-600 mt-2 mb-5 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            23 de Noviembre 2024
+          </p>
+        </div>
       </section>
 
-      {/* --- SECCIÓN 2: LOGÍSTICA --- */}
-      <section className="bg-[var(--color-fondo-logistica)] py-10 md:py-15 shadow-sm">
-        <div className="mx-auto max-w-6xl px-6 md:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-15 items-start">
-            <article className="flex flex-col items-center text-center space-y-0 animate-fade-in-up">
-              <img src="/capilla_1.png" alt="Ceremonia" className="w-32 md:w-40 h-auto" />
-              <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
-                Ceremonia
-              </h4>
-              <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-lg text-stone-900 font-medium ">2 de Mayo <br /> 17:00 hs.</p>
-                <p>Parroquia Santa Ana <br /> Tandil, Buenos Aires.</p>
-                <p className="text-xs italic opacity-70">Comenzará Puntual.</p>
-              </div>
-              <a
-                href="https://maps.app.goo.gl/ZVk8Qi21Le8ayyzy8"
-                target="_blank"
-                className="btn-custom mt-1"
-              >
-                Como llegar a la ceremonia
-              </a>
-            </article>
-            <article className="flex flex-col items-center text-center space-y-0 animate-fade-in-up">
-              <img src="/bola_fiesta.png" alt="Fiesta" className="w-32 md:w-40 h-auto" />
-              <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
-                Fiesta
-              </h4>
-              <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-stone-800 font-medium text-lg">Después de la ceremonia<br /> 19:00 hs</p>
-                <p>Tandil Golf Club <br /> ¡Te esperamos!</p>
-              </div>
-              <a
-                href="https://maps.app.goo.gl/FL3RXe3LoEjSxVLM8"
-                target="_blank"
-                className="btn-custom mt-1"
-              >
-                Llegar a la fiesta
-              </a>
-            </article>
+      {/* --- SECCIÓN 2: CEREMONIA Y FIESTA --- */}
+      <section className="py-20 px-6">
+        <div className="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto items-center">
+          <div className="text-center space-y-4 animate-fade-in-up">
+            <Image src="/icono-ceremonia.svg" alt="Ceremonia" width={80} height={80} className="mx-auto" />
+            <h3 className="text-[28px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-2">Ceremonia</h3>
+            <p className="text-stone-500 font-light text-lg">
+              16:00 hs
+            </p>
+            <p className="font-semibold text-stone-700 text-xl">
+              Capilla del Colegio <br />Nuestra Señora del Huerto
+            </p>
+            <p className="text-stone-500 font-light text-lg px-4">
+              Av.ellaneda 451, CABA
+            </p>
+            <a 
+              href="https://maps.app.goo.gl/TUQ3a3fUjucqZJkP6" 
+              target="_blank"
+              className="btn-custom"
+            >
+              VER UBICACIÓN
+            </a>
+          </div>
+          <div className="text-center space-y-4 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <Image src="/icono-fiesta.svg" alt="Fiesta" width={80} height={80} className="mx-auto" />
+            <h3 className="text-[28px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-2">Fiesta</h3>
+            <p className="text-stone-500 font-light text-lg">
+              18:00 hs
+            </p>
+            <p className="font-semibold text-stone-700 text-xl">
+              Palacio Leloir
+            </p>
+            <p className="text-stone-500 font-light text-lg px-4">
+              Gdor. Udaondo 2399, Ituzaingó
+            </p>
+            <a 
+              href="https://maps.app.goo.gl/G4KqefkYvHSxfmGHA" 
+              target="_blank"
+              className="btn-custom"
+            >
+              VER UBICACIÓN
+            </a>
           </div>
         </div>
       </section>
 
       {/* --- SECCIÓN 3: REGALOS --- */}
-      <section className="bg-[var(--color-fondo-regalo)] py-10 text-center px-6">
-        <div className="max-w-md mx-auto space-y-8 animate-fade-in-up">
-          <img src="/regalito_blanco_2.png" className="w-34 mx-auto" alt="Regalo" />
-          <p className="text-white font-light text-lg italic px-4">
-            Tu presencia es nuestro mejor regalo, pero si querés colaborar con nuestro proyecto de vida juntos, aquí te dejamos los datos.
+      <section className="py-20 text-center px-6 bg-stone-200/50">
+        <div className="max-w-md mx-auto space-y-6 animate-fade-in-up">
+          <Image src="/icono-regalo.svg" alt="Regalo" width={60} height={60} className="mx-auto" />
+          <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
+            Regalo
+          </h4>
+          <p className="text-stone-800 font-light text-lg px-4">
+          Lo más importante es que nos acompañes en este gran día, pero si querés ayudarnos con la luna de miel, te dejamos los datos de nuestra cuenta.
           </p>
-          <button onClick={() => setShowCbu(true)} className="btn-custom-alt">
-            VER DATOS BANCARIOS
-          </button>
-        </div>
-        {showCbu && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
-            <div className="relative w-full max-w-sm rounded-2xl bg-white p-10 shadow-2xl animate-fade-in-up">
-              <button
-                onClick={() => setShowCbu(false)}
-                className="absolute right-5 top-5 text-stone-300 hover:text-stone-500 text-xl"
-              >
-                ✕
-              </button>
-              <h5 className="mb-8 border-b border-stone-100 pb-4 text-left font-montserrat italic text-2xl text-stone-800">
-                Datos Bancarios
-              </h5>
-              <div className="space-y-5 text-left text-xs uppercase tracking-widest text-stone-600 font-light">
-                <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span> Oriana y Tomas</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339604630252128632</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> boda.ori.tomi</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
-              </div>
-            </div>
+          <div class='bg-white p-6 rounded-lg shadow-sm text-left'>
+            <p class='font-semibold'>CBU: 0000003100092348192381</p>
+            <p class='font-semibold'>Alias: BODA.PEYY.LU</p>
+            <p class='mt-2'>Titular: Peyrano, Lucía</p>
           </div>
-        )}
+        </div>
       </section>
 
       {/* --- SECCIÓN 4: CONFIRMAR ASISTENCIA --- */}
@@ -298,14 +317,13 @@ export default function InvitacionPersonalizada() {
 
                     <div>
                       <label htmlFor="alergias" className="block text-sm font-medium text-gray-700">
-                      Alergias o restricciones alimentarias *
+                      Alergias o más restricciones (opcional)
                       </label>
                       <input
                         id="alergias"
                         value={alergias}
                         onChange={(e) => setAlergias(e.target.value)}
                         className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required={asistencia === 'Si, confirmo'}
                       />
                     </div>
 
@@ -352,8 +370,6 @@ export default function InvitacionPersonalizada() {
           </div>
         )}
 
-        {/* Hidden iframe for Google Form submission */}
-        <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
       </section>
 
       {/* --- FOOTER --- */}
