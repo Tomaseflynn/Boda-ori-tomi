@@ -29,10 +29,17 @@ export default function InvitacionPersonalizada() {
   const [bebidas, setBebidas] = useState('');
   
   useEffect(() => {
-    // Reset form fields when 'asistencia' changes
-    setRestriccion('');
-    setAlergias('');
-    setBebidas('');
+    // Pre-fill required fields if guest is not attending to ensure submission
+    if (asistencia === 'No podré asistir') {
+        setRestriccion('No aplica');
+        setAlergias('No aplica');
+        setBebidas('No aplica');
+    } else {
+        // Clear them if they switch back to attending
+        setRestriccion('');
+        setAlergias('');
+        setBebidas('');
+    }
   }, [asistencia]);
 
 
@@ -59,40 +66,47 @@ export default function InvitacionPersonalizada() {
     setShowForm(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    const formData = new FormData();
-    formData.append('entry.1889319655', nombre);
-    formData.append('entry.1433931608', asistencia);
-    
-    // Only send extra data if the guest is attending
-    if (asistencia === 'Si, confirmo') {
-      formData.append('entry.839332354', restriccion);
-      formData.append('entry.1518338349', alergias);
-      formData.append('entry.111869860', bebidas);
-    }
 
-    try {
-      await fetch('https://docs.google.com/forms/d/e/1FAIpQLSdsDQ0Q0jk74w5seBu26o2t_-ni7bOOS_eaISLez-fZYQ9gfw/formResponse', {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors',
-      });
-      
-      if (currentPase >= datosInvitado.pases) {
-        setFormSubmitted(true);
-        setShowForm(false);
-      } else {
-        setCurrentPase(currentPase + 1);
-        resetFormFields();
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-    } finally {
-        setIsSubmitting(false);
+    const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdsDQ0Q0jk74w5seBu26o2t_-ni7bOOS_eaISLez-fZYQ9gfw/formResponse';
+    const form = document.createElement('form');
+    form.action = googleFormUrl;
+    form.method = 'POST';
+    form.target = 'hidden_iframe';
+
+    const fields = {
+      'entry.1889319655': nombre,
+      'entry.1433931608': asistencia,
+      'entry.839332354': asistencia === 'Si, confirmo' ? restriccion : 'No aplica',
+      'entry.1518338349': asistencia === 'Si, confirmo' ? alergias : 'No aplica',
+      'entry.111869860': asistencia === 'Si, confirmo' ? bebidas : 'No aplica',
+    };
+
+    for (const key in fields) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key as keyof typeof fields];
+        form.appendChild(input);
     }
+    
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Cleanup the form after submission
+    setTimeout(() => {
+        document.body.removeChild(form);
+        setIsSubmitting(false);
+        if (currentPase >= datosInvitado.pases) {
+            setFormSubmitted(true);
+            setShowForm(false);
+        } else {
+            setCurrentPase(currentPase + 1);
+            resetFormFields();
+        }
+    }, 500);
   };
 
   const restriccionOptions = [
@@ -127,7 +141,7 @@ export default function InvitacionPersonalizada() {
               ¡Hola {datosInvitado.nombre}!
             </p>
             <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
-              "{datosInvitado.mensaje}"
+              &quot;{datosInvitado.mensaje}&quot;
             </p>
           </div>
         </div>
@@ -275,7 +289,7 @@ export default function InvitacionPersonalizada() {
                       <div className='flex flex-wrap gap-x-4 gap-y-2'>
                         {restriccionOptions.map(option => (
                            <label key={option} className="flex items-center">
-                            <input type="radio" name="restriccion" value={option} required checked={restriccion === option} onChange={e => setRestriccion(e.target.value)} className="mr-2"/>
+                            <input type="radio" name="restriccion" value={option} required={asistencia === 'Si, confirmo'} checked={restriccion === option} onChange={e => setRestriccion(e.target.value)} className="mr-2"/>
                             {option}
                           </label>
                         ))}
@@ -291,7 +305,7 @@ export default function InvitacionPersonalizada() {
                         value={alergias}
                         onChange={(e) => setAlergias(e.target.value)}
                         className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required
+                        required={asistencia === 'Si, confirmo'}
                       />
                     </div>
 
@@ -304,7 +318,7 @@ export default function InvitacionPersonalizada() {
                         value={bebidas}
                         onChange={(e) => setBebidas(e.target.value)}
                          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        required
+                        required={asistencia === 'Si, confirmo'}
                       />
                     </div>
                   </>
@@ -326,7 +340,7 @@ export default function InvitacionPersonalizada() {
                 ¡Gracias por confirmar!
               </h5>
               <p className="text-stone-500">
-                Tu asistencia ha sido registrada.
+                Todas las respuestas han sido enviadas.
               </p>
               <button
                 onClick={() => setFormSubmitted(false)}
@@ -337,6 +351,9 @@ export default function InvitacionPersonalizada() {
             </div>
           </div>
         )}
+
+        {/* Hidden iframe for Google Form submission */}
+        <iframe name="hidden_iframe" id="hidden_iframe" style={{display: 'none'}}></iframe>
       </section>
 
       {/* --- FOOTER --- */}
