@@ -344,6 +344,9 @@ export default function InvitacionPersonalizada() {
         <p className="text-[10px] uppercase tracking-[0.4em] text-stone-500 font-extralight px-6">
           ID: {id} • Invitación personal para {datosInvitado.pases} personas
         </p>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-stone-500 font-extralight px-6">
+      V. 21.22
+        </p>
       </footer>
     </main>
   );
