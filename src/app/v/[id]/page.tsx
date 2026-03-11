@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import invitadosData from '@/data/invitados.json';
+import RsvpForm from '@/components/RsvpForm';
 
 interface Invitado {
   nombre: string;
@@ -19,19 +20,6 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
   const [showCbu, setShowCbu] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  // Campos del formulario
-  const [nombre, setNombre] = useState('');
-  const [asistencia, setAsistencia] = useState('');
-  const [restriccion, setRestriccion] = useState('');
-  const [alergias, setAlergias] = useState('');
-  const [bebidas, setBebidas] = useState('');
-
-  const [currentPase, setCurrentPase] = useState(1);
-  const [allResponses, setAllResponses] = useState<any[]>([]);
-
-  const restriccionOptions = ['Ninguna', 'Vegetariano', 'Vegano', 'Celíaco'];
 
   // --- PASO 1: Obtener el ID desde los parámetros (que pueden ser una promesa) ---
   useEffect(() => {
@@ -69,73 +57,9 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
     }
   }, [id]);
 
-  const resetFormFields = () => {
-    setNombre('');
-    setAsistencia('');
-    setRestriccion('');
-    setAlergias('');
-    setBebidas('');
-  };
-
   const handleOpenForm = () => {
-    setCurrentPase(1);
-    setAllResponses([]);
     setFormSubmitted(false);
-    resetFormFields();
     setShowForm(true);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    let fullRestriccion = restriccion;
-    if (restriccion && restriccion !== 'Ninguna' && alergias) {
-      fullRestriccion = `${restriccion}, ${alergias}`;
-    } else if (alergias) {
-      fullRestriccion = alergias;
-    }
-
-    const currentResponse = {
-      nombre,
-      asistencia,
-      restriccion: asistencia === 'Si, confirmo' ? fullRestriccion : 'N/A',
-      bebidas: asistencia === 'Si, confirmo' ? bebidas : 'N/A',
-      invitacionId: id,
-      paseNum: currentPase
-    };
-
-    if (currentPase < datosInvitado!.pases) {
-      setAllResponses(prev => [...prev, currentResponse]);
-      setCurrentPase(prev => prev + 1);
-      resetFormFields();
-      setIsSubmitting(false);
-    } else {
-      const finalResponses = [...allResponses, currentResponse];
-      
-      try {
-        const response = await fetch('/api/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(finalResponses),
-        });
-
-        if (!response.ok) {
-          throw new Error('Fallo en el envío');
-        }
-
-        setShowForm(false);
-        setFormSubmitted(true);
-
-      } catch (error) {
-        console.error("Error submitting to API route:", error);
-        // Aquí podrías mostrar un mensaje de error al usuario
-      } finally {
-        setIsSubmitting(false);
-      }
-    }
   };
 
   // Si hubo un error en cualquier punto, lo mostramos.
@@ -259,10 +183,24 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 Datos Bancarios
               </h5>
               <div className="space-y-5 text-left text-xs uppercase tracking-widest text-stone-600 font-light">
-                <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span> Oriana y Tomas</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339604630252128632</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> boda.ori.tomi</p>
-                <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Cuenta ARS */}
+                  <div>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Moneda</span> ARS</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span> Tomas Elias, Flynn. y Oriana, Di Carlo</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339603630258941908</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> TOMI.ORI.ARS</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
+                  </div>
+                  {/* Cuenta USD */}
+                  <div>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Moneda</span> USD</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Titular</span>Tomas Elias, Flynn. y Oriana, Di Carlo</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">CBU</span> 0140339604630252128632</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Alias</span> TOMI.ORI.USD</p>
+                    <p><span className="mb-1 block text-[9px] text-stone-300">Banco</span> BANCO PROVINCIA BS.AS.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -287,88 +225,15 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
       {/* FORM MODAL */}
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
-          <div className="relative w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setShowForm(false)}
-              className="absolute right-5 top-5 text-stone-300 hover:text-stone-500 text-xl"
-            >
-              ✕
-            </button>
-            <h5 className="mb-6 border-b border-stone-100 pb-4 text-left font-montserrat italic text-2xl text-stone-800">
-              Confirmación de Asistencia {datosInvitado.pases > 1 ? `(${currentPase} de ${datosInvitado.pases})` : ''}
-            </h5>
-            <form onSubmit={handleSubmit} className="space-y-4 text-left">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Nombre y apellido *</label>
-                <input
-                  type="text"
-                  value={nombre}
-                  onChange={e => setNombre(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Asistencia *</label>
-                <div className="flex gap-4">
-                  <label className="flex items-center">
-                    <input type="radio" name="asistencia" value="Si, confirmo" required checked={asistencia === 'Si, confirmo'} onChange={(e) => setAsistencia(e.target.value)} className="mr-2"/>
-                    Sí, confirmo
-                  </label>
-                  <label className="flex items-center">
-                    <input type="radio" name="asistencia" value="No podré asistir" required checked={asistencia === 'No podré asistir'} onChange={(e) => setAsistencia(e.target.value)} className="mr-2"/>
-                    No podré asistir
-                  </label>
-                </div>
-              </div>
-
-              {asistencia === 'Si, confirmo' && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Restricciones alimentarias *</label>
-                    <div className='flex flex-wrap gap-x-4 gap-y-2'>
-                      {restriccionOptions.map(option => (
-                         <label key={option} className="flex items-center">
-                          <input type="radio" name="restriccion" value={option} required={asistencia === 'Si, confirmo'} checked={restriccion === option} onChange={e => setRestriccion(e.target.value)} className="mr-2"/>
-                          {option}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="alergias" className="block text-sm font-medium text-gray-700">
-                    Alergias o más restricciones (opcional)
-                    </label>
-                    <input
-                      id="alergias"
-                      value={alergias}
-                      onChange={(e) => setAlergias(e.target.value)}
-                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="bebidas" className="block text-sm font-medium text-gray-700">
-                    ¿Qué bebidas no pueden faltar? *
-                    </label>
-                    <input
-                      id="bebidas"
-                      value={bebidas}
-                      onChange={(e) => setBebidas(e.target.value)}
-                       className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      required={asistencia === 'Si, confirmo'}
-                    />
-                  </div>
-                </>
-              )}
-
-              <button type="submit" disabled={isSubmitting} className="btn-custom w-full mt-4 disabled:opacity-50">
-                 {isSubmitting ? 'Enviando...' : (currentPase < datosInvitado.pases ? 'Siguiente Invitado' : 'Enviar Confirmación')}
-              </button>
-            </form>
-          </div>
+          <RsvpForm
+            totalPases={datosInvitado.pases}
+            invitacionId={id}
+            onClose={() => setShowForm(false)}
+            onSuccess={() => {
+              setShowForm(false);
+              setFormSubmitted(true);
+            }}
+          />
         </div>
       )}
 
