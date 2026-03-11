@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import invitadosData from '@/data/invitados.json';
 
@@ -14,8 +14,27 @@ export default function InvitacionPersonalizada() {
   const params = useParams();
   const id = params.id as string;
   const [showCbu, setShowCbu] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const datosInvitado = (invitadosData as Record<string, Invitado>)[id];
+
+  // Form state
+  const [currentPase, setCurrentPase] = useState(1);
+  const [nombre, setNombre] = useState('');
+  const [asistencia, setAsistencia] = useState('');
+  const [restriccion, setRestriccion] = useState('');
+  const [alergias, setAlergias] = useState('');
+  const [bebidas, setBebidas] = useState('');
+  
+  useEffect(() => {
+    // Reset form fields when 'asistencia' changes
+    setRestriccion('');
+    setAlergias('');
+    setBebidas('');
+  }, [asistencia]);
+
 
   if (!datosInvitado) {
     return (
@@ -24,6 +43,65 @@ export default function InvitacionPersonalizada() {
       </div>
     );
   }
+
+  const resetFormFields = () => {
+    setNombre('');
+    setAsistencia('');
+    setRestriccion('');
+    setAlergias('');
+    setBebidas('');
+  };
+
+  const handleOpenForm = () => {
+    setCurrentPase(1);
+    setFormSubmitted(false);
+    resetFormFields();
+    setShowForm(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formData = new FormData();
+    formData.append('entry.1889319655', nombre);
+    formData.append('entry.1433931608', asistencia);
+    
+    // Only send extra data if the guest is attending
+    if (asistencia === 'Si, confirmo') {
+      formData.append('entry.839332354', restriccion);
+      formData.append('entry.1518338349', alergias);
+      formData.append('entry.111869860', bebidas);
+    }
+
+    try {
+      await fetch('https://docs.google.com/forms/d/e/1FAIpQLSdsDQ0Q0jk74w5seBu26o2t_-ni7bOOS_eaISLez-fZYQ9gfw/formResponse', {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors',
+      });
+      
+      if (currentPase >= datosInvitado.pases) {
+        setFormSubmitted(true);
+        setShowForm(false);
+      } else {
+        setCurrentPase(currentPase + 1);
+        resetFormFields();
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    } finally {
+        setIsSubmitting(false);
+    }
+  };
+
+  const restriccionOptions = [
+    "Sin restricciones",
+    "Vegetariano/a",
+    "Vegano/a",
+    "Celíaco/a",
+    "Diabético/a"
+  ];
 
   return (
     <main
@@ -49,14 +127,14 @@ export default function InvitacionPersonalizada() {
               ¡Hola {datosInvitado.nombre}!
             </p>
             <p className="text-stone-500 font-light text-lg md:text-xl max-w-[260px] md:max-w-xs mx-auto leading-relaxed border-t border-stone-200/50 pt-4">
-              &quot;{datosInvitado.mensaje}&quot;
+              "{datosInvitado.mensaje}"
             </p>
           </div>
         </div>
         <div className="scroll-down"></div>
       </section>
 
-      {/* --- SECCIÓN 2: LOGÍSTICA (Limpia y Escalable) --- */}
+      {/* --- SECCIÓN 2: LOGÍSTICA --- */}
       <section className="bg-[var(--color-fondo-logistica)] py-10 md:py-15 shadow-sm">
         <div className="mx-auto max-w-6xl px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-15 items-start">
@@ -133,7 +211,7 @@ export default function InvitacionPersonalizada() {
         )}
       </section>
 
-      {/* --- SECCIÓN 4: confirmar asistencia --- */}
+      {/* --- SECCIÓN 4: CONFIRMAR ASISTENCIA --- */}
       <section className="py-20 text-center px-6">
         <div className="max-w-md md:max-w-[50%] mx-auto space-y-8 animate-fade-in-up">
           <h4 className="text-[24px] md:text-[32px] tracking-[5px] uppercase font-light text-stone-800 mt-2 mb-5">
@@ -143,12 +221,122 @@ export default function InvitacionPersonalizada() {
             Esperamos que seas parte de este día tan especial para nosotros. <br />Por favor, confirmá tu asistencia antes del 15 de Abril.
           </p>
           <button
-            onClick={() => (window.location.href = `/confirmar/${id}`)}
+            onClick={handleOpenForm}
             className="btn-custom"
           >
             CONFIRMAR ASISTENCIA
           </button>
         </div>
+        
+        {/* FORM MODAL */}
+        {showForm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
+            <div className="relative w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl animate-fade-in-up max-h-[90vh] overflow-y-auto">
+              <button
+                onClick={() => setShowForm(false)}
+                className="absolute right-5 top-5 text-stone-300 hover:text-stone-500 text-xl"
+              >
+                ✕
+              </button>
+              <h5 className="mb-6 border-b border-stone-100 pb-4 text-left font-montserrat italic text-2xl text-stone-800">
+                Confirmación de Asistencia {datosInvitado.pases > 1 ? `(${currentPase} de ${datosInvitado.pases})` : ''}
+              </h5>
+              <form onSubmit={handleSubmit} className="space-y-4 text-left">
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Nombre y apellido *</label>
+                  <input
+                    type="text"
+                    value={nombre}
+                    onChange={e => setNombre(e.target.value)}
+                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Asistencia *</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center">
+                      <input type="radio" name="asistencia" value="Si, confirmo" required checked={asistencia === 'Si, confirmo'} onChange={(e) => setAsistencia(e.target.value)} className="mr-2"/>
+                      Sí, confirmo
+                    </label>
+                    <label className="flex items-center">
+                      <input type="radio" name="asistencia" value="No podré asistir" required checked={asistencia === 'No podré asistir'} onChange={(e) => setAsistencia(e.target.value)} className="mr-2"/>
+                      No podré asistir
+                    </label>
+                  </div>
+                </div>
+
+                {asistencia === 'Si, confirmo' && (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Restricciones alimentarias *</label>
+                      <div className='flex flex-wrap gap-x-4 gap-y-2'>
+                        {restriccionOptions.map(option => (
+                           <label key={option} className="flex items-center">
+                            <input type="radio" name="restriccion" value={option} required checked={restriccion === option} onChange={e => setRestriccion(e.target.value)} className="mr-2"/>
+                            {option}
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="alergias" className="block text-sm font-medium text-gray-700">
+                      Alergias o restricciones alimentarias *
+                      </label>
+                      <input
+                        id="alergias"
+                        value={alergias}
+                        onChange={(e) => setAlergias(e.target.value)}
+                        className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="bebidas" className="block text-sm font-medium text-gray-700">
+                      ¿Qué bebidas no pueden faltar? *
+                      </label>
+                      <input
+                        id="bebidas"
+                        value={bebidas}
+                        onChange={(e) => setBebidas(e.target.value)}
+                         className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+
+                <button type="submit" disabled={isSubmitting} className="btn-custom w-full mt-4 disabled:opacity-50">
+                   {isSubmitting ? 'Enviando...' : (currentPase < datosInvitado.pases ? 'Siguiente Invitado' : 'Enviar Confirmación')}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+        
+        {/* SUCCESS MODAL */}
+        {formSubmitted && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all">
+            <div className="relative w-full max-w-sm rounded-2xl bg-white p-10 shadow-2xl animate-fade-in-up text-center">
+              <h5 className="mb-4 font-montserrat italic text-2xl text-stone-800">
+                ¡Gracias por confirmar!
+              </h5>
+              <p className="text-stone-500">
+                Tu asistencia ha sido registrada.
+              </p>
+              <button
+                onClick={() => setFormSubmitted(false)}
+                className="btn-custom mt-6"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* --- FOOTER --- */}
