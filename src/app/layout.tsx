@@ -11,6 +11,10 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "Invitación Boda - Ori & Tomi",
+  icons: {
+    icon: "public/favicon.ico",
+    shortcut: "public/favicon.ico",
+  },
 };
 
 export default function RootLayout({
