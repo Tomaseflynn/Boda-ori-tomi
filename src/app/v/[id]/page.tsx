@@ -43,7 +43,15 @@ export default function InvitadoPage() {
 
   useEffect(() => {
     if (id) {
-      const invitadoEncontrado = invitados.find(inv => inv.id === id);
+      // The 'invitados.json' is an object of objects, not an array.
+      // We need to convert it into an array to use .find()
+      const invitadosArray = Object.keys(invitados).map(key => ({
+        id: key,
+        ...(invitados as any)[key]
+      }));
+
+      const invitadoEncontrado = invitadosArray.find(inv => inv.id === id);
+
       if (invitadoEncontrado) {
         setDatosInvitado(invitadoEncontrado);
       } else {
@@ -236,10 +244,10 @@ export default function InvitadoPage() {
           <p className="text-stone-800 font-light text-lg px-4">
           Lo más importante es que nos acompañes en este gran día, pero si querés ayudarnos con la luna de miel, te dejamos los datos de nuestra cuenta.
           </p>
-          <div class='bg-white p-6 rounded-lg shadow-sm text-left'>
-            <p class='font-semibold'>CBU: 0000003100092348192381</p>
-            <p class='font-semibold'>Alias: BODA.PEYY.LU</p>
-            <p class='mt-2'>Titular: Peyrano, Lucía</p>
+          <div className="bg-white p-6 rounded-lg shadow-sm text-left">
+            <p className="font-semibold">CBU: 0000003100092348192381</p>
+            <p className="font-semibold">Alias: BODA.PEYY.LU</p>
+            <p className="mt-2">Titular: Peyrano, Lucía</p>
           </div>
         </div>
       </section>
@@ -305,7 +313,7 @@ export default function InvitadoPage() {
                   <>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Restricciones alimentarias *</label>
-                      <div className='flex flex-wrap gap-x-4 gap-y-2'>
+                      <div className="flex flex-wrap gap-x-4 gap-y-2">
                         {restriccionOptions.map(option => (
                            <label key={option} className="flex items-center">
                             <input type="radio" name="restriccion" value={option} required={asistencia === 'Si, confirmo'} checked={restriccion === option} onChange={e => setRestriccion(e.target.value)} className="mr-2"/>
