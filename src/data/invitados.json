@@ -1,32 +1,557 @@
-{
-  "A1X": {
-    "nombre": "Familia García",
-    "pases": 4,
-    "mensaje": "¡Nos encantaría que vengan con los chicos!"
-  },
-  "B2Y": {
-    "nombre": "Juan y Marina",
-    "pases": 2,
-    "mensaje": "¡No pueden faltar a nuestra gran noche!"
-  },
-  "Z9P": {
-    "nombre": "Tía Marta",
-    "pases": 1,
-    "mensaje": "¡Te esperamos para bailar toda la noche!"
-  },
-    "E4R": {
+{   "E4R": {
     "nombre": "Oriana Di Carlo",
     "pases": 1,
     "mensaje": "¡Te esperamos para celebrar juntos!"
-  },
-    "AAA": {
-    "nombre": "Susana",
-    "pases": 2,
-    "mensaje": "Queremos que vos y Alfredo sean parte de este día tan especial para nosotros."
   },
     "AAB": {
     "nombre": "Balls vs Zombies",
     "pases": 2,
     "mensaje": "Quisiera que sean parte de este momento tan especial. ahre"
+  }, 
+  "AAA": {
+    "nombre": "Susana",
+    "pases": 2,
+    "mensaje": "Queremos que vos y Alfredo sean parte de este día tan especial para nosotros."
+  },
+  "SAX": {
+    "nombre": "Facu",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "IMH": {
+    "nombre": "Flia",
+    "pases": 3,
+    "mensaje": "Nos encantaría que los 3 nos acompañen en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "OOB": {
+    "nombre": "Vicen",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "4Y9": {
+    "nombre": "Vivi",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial! ¡Te esperamos!"
+  },
+  "K8K": {
+    "nombre": "Valen",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Pedro en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "7QO": {
+    "nombre": "Luqui",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Caro en este dia. ¡Los esperamos!"
+  },
+  "TIN": {
+    "nombre": "Lu",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Facu en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "SCL": {
+    "nombre": "Aldo y Zulma",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "VVT": {
+    "nombre": "Mirta",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "RJ4": {
+    "nombre": "Maria y Pedro",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día tan especial para nosotros dos. ¡Los esperamos!"
+  },
+  "G31": {
+    "nombre": "Pao",
+    "pases": 1,
+    "mensaje": "Pao, nos encantaría que nos acompañes en este dia tan especial. ¡Te esperamos!"
+  },
+  "ZHM": {
+    "nombre": "Car",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Fran en nuestro día especial. ¡Los esperamos!"
+  },
+  "X7K": {
+    "nombre": "Agus",
+    "pases": 2,
+    "mensaje": "Agus, nos encantaría que nos acompañen en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "H1S": {
+    "nombre": "Rodolfo",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "C87": {
+    "nombre": "Colo",
+    "pases": 2,
+    "mensaje": "Nos encantaría que vos y Ana nos acompañen en este día tan especial. ¡Los esperamos!"
+  },
+  "AVS": {
+    "nombre": "Ernes",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en nuestro día tan especial. ¡Te esperamos!"
+  },
+  "I7W": {
+    "nombre": "Cecilia y Daniel",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en este dia. ¡Los esperamos!"
+  },
+  "OJD": {
+    "nombre": "Eze",
+    "pases": 3,
+    "mensaje": "Nos encantaría que nos acompañes junto con Kiari y Mateo en este día tan especial. ¡Los esperamos!"
+  },
+  "YI3": {
+    "nombre": "Guillermina",
+    "pases": 1,
+    "mensaje": "¡Guille, nos encantaría que nos acompañes en este día tan especial para nosotros! ¡Te esperamos!"
+  },
+  "I9B": {
+    "nombre": "Guillermo",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día tan especial. ¡Los esperamos!"
+  },
+  "UKK": {
+    "nombre": "Josefina",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "CRQ": {
+    "nombre": "Flia Flynn Souto",
+    "pases": 5,
+    "mensaje": "Querida Flia Flynn Souto, nos encantaría que nos acompañen los 5 en este día tan especial. ¡Los esperamos!"
+  },
+  "JO1": {
+    "nombre": "Nico",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "W0": {
+    "nombre": "Simon y Dana",
+    "pases": 4,
+    "mensaje": "¡Nos encantaría que nos acompañen los 4 en nuestra boda! Será un día especial."
+  },
+  "W2Y": {
+    "nombre": "Mica",
+    "pases": 2,
+    "mensaje": "Nnos encantaría que vos y Mati nos acompañen en este día tan especial. ¡Los esperamos!"
+  },
+  "K6V": {
+    "nombre": "Ana",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "IWA": {
+    "nombre": "Fede",
+    "pases": 2,
+    "mensaje": "Nos encantaría que vos y Vero nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "N7S": {
+    "nombre": "Lali",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "HW0": {
+    "nombre": "Nico",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro casamiento. ¡Los esperamos!"
+  },
+  "CJG": {
+    "nombre": "Stella",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "56G": {
+    "nombre": "Juan",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "1FF": {
+    "nombre": "Santi",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "FKQ": {
+    "nombre": "Jero",
+    "pases": 1,
+    "mensaje": "Jeronimo, nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "DZ1": {
+    "nombre": "Sandra",
+    "pases": 2,
+    "mensaje": "Nos encantaría que vos y Javi nos acompañen en nuestro día especial. ¡Los esperamos!"
+  },
+  "4O1": {
+    "nombre": "David",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "O7C": {
+    "nombre": "Guada",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "5NN": {
+    "nombre": "Sergio",
+    "pases": 2,
+    "mensaje": "Nos encantaría que Irene y vos sean parte de nuestro día especial. ¡Los esperamos!"
+  },
+  "8I9": {
+    "nombre": "Lu",
+    "pases": 2,
+    "mensaje": "Nos encantaría que con Lauti nos acompañen a los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "RO8": {
+    "nombre": "Maria",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "W1O": {
+    "nombre": "Mane",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "ZKJ": {
+    "nombre": "Chucho",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "88B": {
+    "nombre": "Anita",
+    "pases": 2,
+    "mensaje": "un saludo Especial para Colombo jaja ¡Nos encantaría que nos acompañen en nuestra boda! ¡Será un día muy especial para nosotros!"
+  },
+  "GJO": {
+    "nombre": "Clarita",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "CHL": {
+    "nombre": "Enzo",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "4OC": {
+    "nombre": "Sergio",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen a los dos en este día tan especial. ¡Los esperamos!"
+  },
+  "TRT": {
+    "nombre": "Santo",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen los dos en nuestro día especial! ¡Los esperamos!"
+  },
+  "9VK": {
+    "nombre": "Peque",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen en nuestro día especial! ¡los esperamos!"
+  },
+  "EV1": {
+    "nombre": "Lurdi",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "DR5": {
+    "nombre": "Gustavo",
+    "pases": 2,
+    "mensaje": "Nos encantaría que sean parte de este día tan especial para nosotros."
+  },
+  "PD5": {
+    "nombre": "Tebi",
+    "pases": 2,
+    "mensaje": "Nos encantaría que sean parte de este día tan especial para nosotros. ¡Los esperamos!"
+  },
+  "H7T": {
+    "nombre": "Fran",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "WGC": {
+    "nombre": "Maia",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "340": {
+    "nombre": "Daniel",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "Z6X": {
+    "nombre": "Cata",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "9ZK": {
+    "nombre": "Feli",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen los dos en nuestro día especial! ¡Los esperamos!"
+  },
+  "9JH": {
+    "nombre": "Valen",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen en este día tan especial para nosotros! ¡Los esperamos!"
+  },
+  "MX": {
+    "nombre": "Abuelo",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día tan especial. ¡Los esperamos!"
+  },
+  "RQJ": {
+    "nombre": "Negra",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este dia tan especial! ¡Te esperamos!"
+  },
+  "A9E": {
+    "nombre": "Martu",
+    "pases": 2,
+    "mensaje": "Nos encantaría que con Tincho y Santi nos acompañen en este dia. ¡Los esperamos!"
+  },
+  "E5K": {
+    "nombre": "Pili",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial! ¡Te esperamos!"
+  },
+  "H0T": {
+    "nombre": "Jose",
+    "pases": 2,
+    "mensaje": "Nos encantaría que con Diego nos acompañen en este dia tan especial. ¡Los esperamos!"
+  },
+  "QI4": {
+    "nombre": "Lu",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "BSK": {
+    "nombre": "Lu",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con el Chino en este dia. ¡Los esperamos!"
+  },
+  "ACX": {
+    "nombre": "Meri",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial para nosotros! ¡Te esperamos!"
+  },
+  "RTU": {
+    "nombre": "Marti",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Juanma en este día tan especial. ¡Los esperamos!"
+  },
+  "8QR": {
+    "nombre": "Anita",
+    "pases": 1,
+    "mensaje": "Nos encantaria que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "8ZE": {
+    "nombre": "Cami",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este dia tan especial. ¡Te esperamos!"
+  },
+  "6FQ": {
+    "nombre": "Valen",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "R80": {
+    "nombre": "Mica",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "OPP": {
+    "nombre": "Delfi",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "BCO": {
+    "nombre": "Mechi",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que con Agus nos compañen en nuestro día tan especial! ¡Esperamos verlos!"
+  },
+  "3JW": {
+    "nombre": "Beli",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen junto con Gonza y Fonchi en este día tan especial. ¡Los esperamos!"
+  },
+  "LX9": {
+    "nombre": "Tere",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Fer en este dia tan especial. ¡Les esperamos!"
+  },
+  "SIM": {
+    "nombre": "Euge",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen con el Ruso y baby en este dia tan especial! ¡Los esperamos!"
+  },
+  "NPH": {
+    "nombre": "Martu",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "JBM": {
+    "nombre": "Ropi",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "K9R": {
+    "nombre": "Belu",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen con Rodri en este gran dia. Los esperamos!"
+  },
+  "TPV": {
+    "nombre": "Pau",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Indi en nuestro día tan especial. ¡Las esperamos!"
+  },
+  "ZAU": {
+    "nombre": "Lauri",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "K5V": {
+    "nombre": "Clari",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Rodri en nuestro día especial. ¡Los esperamos!"
+  },
+  "KBD": {
+    "nombre": "Mica",
+    "pases": 2,
+    "mensaje": "Nos encantaría que con Stefo nos acompañen en este día tan especial. ¡Los esperamos!"
+  },
+  "CP3": {
+    "nombre": "Guille",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este dia. ¡Te esperamos!"
+  },
+  "D4G": {
+    "nombre": "Rama",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Bea en este día tan especial. ¡Los esperamos!"
+  },
+  "PD6": {
+    "nombre": "Gasti",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "FX": {
+    "nombre": "Fer",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "K3E": {
+    "nombre": "Kari",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen con Mati y Fidel en nuestro casamiento. ¡Los esperamos!"
+  },
+  "MVO": {
+    "nombre": "Fini",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en nuestro día especial. ¡Te esperamos!"
+  },
+  "KVM": {
+    "nombre": "Mujer",
+    "pases": 1,
+    "mensaje": "Mujer extra coro, nos encantaría que nos acompañes en nuestro día especial. ¡Te esperamos!"
+  },
+  "2A0": {
+    "nombre": "Bauti",
+    "pases": 2,
+    "mensaje": "Nos encantaría que con Clari sean parte de este dia tan especial. ¡Los esperamos!"
+  },
+  "5QE": {
+    "nombre": "Oso",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial para nosotros! ¡Te esperamos!"
+  },
+  "692": {
+    "nombre": "Fran",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "UOF": {
+    "nombre": "Champion",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "SHU": {
+    "nombre": "Pillud - Luko - luken",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "N0W": {
+    "nombre": "Tincho",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial para nosotros! ¡Te esperamos!"
+  },
+  "GQG": {
+    "nombre": "Joaco",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen los dos en nuestro día especial! ¡Los esperamos!"
+  },
+  "FZ9": {
+    "nombre": "Guada",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "PMH": {
+    "nombre": "Bucci",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial! ¡Te esperamos!"
+  },
+  "V62": {
+    "nombre": "Ferla",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "YM3": {
+    "nombre": "Maruto",
+    "pases": 1,
+    "mensaje": "¡Nos encantaría que nos acompañes en este día tan especial! ¡Te esperamos!"
+  },
+  "RC6": {
+    "nombre": "Ripo",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial para nosotros. ¡Te esperamos!"
+  },
+  "S2H": {
+    "nombre": "Ray",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "5B0": {
+    "nombre": "Napa",
+    "pases": 2,
+    "mensaje": "¡Nos encantaría que nos acompañen en este día tan especial para nosotros! ¡Los esperamos!"
+  },
+  "LK": {
+    "nombre": "Fran",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "WVD": {
+    "nombre": "Checho",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
+  },
+  "AU": {
+    "nombre": "Chaco",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en nuestro día especial. ¡Te esperamos!"
+  },
+  "GCX": {
+    "nombre": "Fede",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "R6H": {
+    "nombre": "Chulyan",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
+  },
+  "7VC": {
+    "nombre": "Jere",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen los dos en nuestro día especial. ¡Los esperamos!"
   }
+
 }
