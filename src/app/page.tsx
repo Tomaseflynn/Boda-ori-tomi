@@ -5,14 +5,16 @@ export default function HomePage() {
     <main 
       className="min-h-screen flex flex-col items-center justify-center text-[#4a4a4a] font-montserrat antialiased relative text-center px-6"
       style={{ 
-        backgroundImage: 'url(/fondo-papel.jpg)', 
-        backgroundSize: 'cover', 
+        backgroundImage: 'url(/fondo_papel.jpeg)', 
+        backgroundSize: '500px', 
+        backgroundRepeat: 'repeat',
+        backgroundAttachment: 'fixed',
         backgroundPosition: 'center'
       }}
     >
       <div className="animate-fade-in-portada flex flex-col items-center">
         <img 
-          src="/logo-portada.png" 
+          src="/Proyecto_nuevo.png" 
           alt="Ori & Tomi" 
           className="w-full max-w-[300px] md:max-w-[450px] h-auto mb-10" 
         />
