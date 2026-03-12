@@ -563,5 +563,10 @@
     "nombre": "Agus",
     "pases": 1,
     "mensaje": "Nos encantaría que nos acompañes en nuestro día especial. ¡Te esperamos!"
+  },
+  "MF": {
+    "nombre": "Marce",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día especial. ¡Te esperamos!"
   }
 }
