@@ -85,12 +85,12 @@
   },
   "C87": {
     "nombre": "Colo",
-    "pases": 2,
-    "mensaje": "Nos encantaría que vos y Ana nos acompañen en este día tan especial. ¡Los esperamos!"
+    "pases": 3,
+    "mensaje": "Nos encantaría que vos,Ernes y Ana nos acompañen en este día tan especial. ¡Los esperamos!"
   },
   "AVS": {
     "nombre": "Ernes",
-    "pases": 1,
+    "pases": 0,
     "mensaje": "Nos encantaría que nos acompañes en nuestro día tan especial. ¡Te esperamos!"
   },
   "I7W": {
@@ -100,8 +100,8 @@
   },
   "OJD": {
     "nombre": "Eze",
-    "pases": 3,
-    "mensaje": "Nos encantaría que nos acompañes junto con Kiari y Mateo en este día tan especial. ¡Los esperamos!"
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día tan especial. ¡Te esperamos!"
   },
   "YI3": {
     "nombre": "Guillermina",
