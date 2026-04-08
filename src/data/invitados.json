@@ -568,5 +568,20 @@
     "nombre": "Marce",
     "pases": 1,
     "mensaje": "Nos encantaría que nos acompañes en este día especial. ¡Te esperamos!"
+  },
+  "MYG": {
+    "nombre": "Martita y Guille",
+    "pases": 2,
+    "mensaje": "Nos encantaría que nos acompañen en este día especial. ¡Los esperamos!"
+  },
+  "JA": {
+    "nombre": "Jose",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día especial. ¡Te esperamos!"
+  },
+  "CF": {
+    "nombre": "Cata",
+    "pases": 1,
+    "mensaje": "Nos encantaría que nos acompañes en este día especial. ¡Te esperamos!"
   }
 }
