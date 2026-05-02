@@ -132,7 +132,7 @@ export default function InvitacionPersonalizada({ params }: { params: any }) {
                 Ceremonia
               </h4>
               <div className="space-y-2 text-stone-500 font-light leading-relaxed">
-                <p className="text-lg text-stone-900 font-medium ">2 de Mayo <br/> 17:00 hs.</p>
+                <p className="text-lg text-stone-900 font-medium ">2 de Mayo <br/> 16:30 hs.</p>
                 <p>Parroquia Santa Ana <br/> Tandil, Buenos Aires.</p>
                 <p className="text-xs italic opacity-70">Comenzará Puntual.</p>
               </div>
